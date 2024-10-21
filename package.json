@@ -13,7 +13,12 @@
     "next": "14.2.15",
     "react": "^18",
     "react-dom": "^18",
+<<<<<<< HEAD
     "react-hook-form": "^7.53.1"
+=======
+    "react-hook-form": "^7.53.1",
+    "react-input-mask": "^2.0.4"
+>>>>>>> 7980db1 (page id)
   },
   "devDependencies": {
     "@types/node": "^20",
