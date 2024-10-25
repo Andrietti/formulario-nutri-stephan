@@ -47,7 +47,7 @@ body {
   border-right: 2px solid;
   white-space: nowrap;
   letter-spacing: 2px;
-  animation: typewriter 2s steps(40) 1 normal both, blink 500ms steps(40) infinite;
+  animation: typewriter 1s steps(40) 1 normal both, blink 500ms steps(40) infinite;
 }
 
 /* Adicionando delays para cada linha */
@@ -56,13 +56,19 @@ body {
 }
 
 .line2 {
-  animation-delay: 2s; /* Inicia após a primeira linha */
+  animation-delay: 1s; /* Inicia após a primeira linha */
 }
 
 .line3 {
-  animation-delay: 4s; /* Inicia após a segunda linha */
+  animation-delay: 2s; /* Inicia após a segunda linha */
 }
 
 .line4 {
-  animation-delay: 6s; /* Inicia após a terceira linha */
+  animation-delay: 3s; /* Inicia após a terceira linha */
 }
+.line5 {
+  animation-delay: 3.5s; /* Inicia após a quarta linha */
+}
+
+.cinza {
+          background-color:#0b1014}

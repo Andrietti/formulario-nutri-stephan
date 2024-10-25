@@ -15,24 +15,24 @@ export default function FormularioInicio() {
     };
 
     const handleBackClick = () => {
-        // Lógica para voltar (pode ser um estado ou navegação)
-        console.log("Voltar clicado"); // Placeholder para a lógica de voltar
+        // Lógica para voltar
+        console.log("Voltar clicado");
     };
 
     return (
         <div className="flex min-h-screen w-full overflow-hidden">
             <main className="animate__animated animate__fadeIn flex min-h-screen w-full items-center justify-center flex-col bg-black"
-                style={{ '--animate-duration; ': '1s' }} // Ajuste de duração
+                style={{ '--animate-duration': '1s' }} // Ajuste de duração
             >         
                 {/* Ícone de voltar no canto superior esquerdo */}
                 <button onClick={handleBackClick} className="absolute top-4 left-4 text-gray-300 hover:text-white transition duration-200">
                     <FaArrowLeft size={24} />
                 </button>
 
-                <img src="/img/maca2.png" alt="Imagem de tireoide" className="w-full h-2/4 object-contain" />
+                <img src="/img/morango3.png" alt="Imagem de tireoide" className="w-full h-2/4 object-contain" />
 
                 <div className="flex flex-col items-center mt-4">
-                    <h2 className="text-center text-gray-300 text-lg font-semibold">Já passou por cirurgias ou internações? Quais foram?</h2>
+                    <h2 className="text-center text-gray-300 text-lg font-semibold">Além das anteriores, você tem ou já teve alguma outra doença? Se sim, explique.</h2>
                 </div>
 
                 <textarea

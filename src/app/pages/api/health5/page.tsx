@@ -29,10 +29,10 @@ export default function FormularioInicio() {
                     <FaArrowLeft size={24} />
                 </button>
 
-                <img src="/img/maca2.png" alt="Imagem de tireoide" className="w-full h-2/4 object-contain" />
+                <img src="/img/laranja.png" alt="Imagem de tireoide" className="w-full h-2/4 object-contain" />
 
                 <div className="flex flex-col items-center mt-4">
-                    <h2 className="text-center text-gray-300 text-lg font-semibold">Já passou por cirurgias ou internações? Quais foram?</h2>
+                    <h2 className="text-center text-gray-300 text-lg font-semibold">Ao longo do dia, você tem energia e sente disposição para realizar suas atividades?</h2>
                 </div>
 
                 <textarea

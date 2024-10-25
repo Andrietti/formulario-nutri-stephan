@@ -13,10 +13,11 @@ export default function FormularioInicio() {
     const [checkboxtrue2, setCheckbox2] = useState(false);
     const [checkboxtrue3, setCheckbox3] = useState(false);
     const [checkboxtrue4, setCheckbox4] = useState(false);
+    const [checkboxtrue5, setCheckbox5] = useState(false);
 
-    const valorcheckbox = [checkboxtrue1, checkboxtrue2, checkboxtrue3, checkboxtrue4];
-    const setvalorcheckbox = [setCheckbox1, setCheckbox2, setCheckbox3, setCheckbox4];
-    const doencas = ["Tireóide", "Pressão alta", "Diabétes", "Fígado", "Outro"];
+    const valorcheckbox = [checkboxtrue1, checkboxtrue2, checkboxtrue3, checkboxtrue4, checkboxtrue5];
+    const setvalorcheckbox = [setCheckbox1, setCheckbox2, setCheckbox3, setCheckbox4, setCheckbox5];
+    const doencas = ["Dor de cabeça", "Tontura", "Visão Embaçada", "Perda de equilíbrio", "Sensação de desmaio"];
 
     const trocarDivs = (mostrar) => {
         setMostrarPrimeraDiv(mostrar);
@@ -38,14 +39,14 @@ export default function FormularioInicio() {
                     <FaArrowLeft size={24} />
                 </button>
 
-                <img src="/img/pera1.png" alt="Imagem de tireoide" className="w-full h-2/4 object-contain" />
+                <img src="/img/banana2.png" alt="Imagem de tireoide" className="w-full h-2/4 object-contain" />
 
                 <div className='flex flex-col items-center mt-2'>
-                    <h1 className="text-center text-gray-300 text-lg font-semibold">Já teve alteração em algum órgão ou sistema?</h1>
+                    <h1 className="text-center text-gray-300 text-lg font-semibold">Sente ou já sentiu algum desses sintomas?</h1>
                 </div>
 
                 {/* Container para os checkboxes */}
-                <div className="flex flex-col ml-4 mt-4 space-y-2 w-full mb-2 ">
+                <div className="flex flex-col ml-4 mt-4 space-y-1 w-full mb-2 ">
                     {valorcheckbox.map((checkbox, index) => (
                         <div className="flex items-center" key={index}>
                             <Switch
@@ -71,7 +72,7 @@ export default function FormularioInicio() {
                 <div className="flex justify-center w-full px-4 pb-4">
                     <textarea
                         name="detalhes"
-                        placeholder="Outro, escreva aqui..."
+                        placeholder="Conte-nos como foi e com qual frequência sente esses sintomas."
                         className="text-gray-300 outline-none text-sm w-full p-2 rounded-lg placeholder-gray-500 shadow-2xl shadow-black"
                         style={{
                             backgroundColor: '#0b1014',
@@ -82,7 +83,7 @@ export default function FormularioInicio() {
                     />
                 </div>
 
-                <div className="div-botoes mt-2 mb-6 space-x-4">
+                <div className="div-botoes mb-4 space-x-4">
                     <button className="bg-gradient-to-r from-gray-900 to-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out">
                         Continuar
                     </button>
