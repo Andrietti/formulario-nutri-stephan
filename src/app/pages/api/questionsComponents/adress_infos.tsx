@@ -7,6 +7,8 @@ import { FaArrowLeft } from 'react-icons/fa'; // Importando o ícone de voltar
 import { MdOutlineWorkOutline } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa";
 import { FaRegQuestionCircle } from "react-icons/fa";
+import ButtonContinue from '../genericComponents/button_continue';
+import ButtonVoltar from '../genericComponents/button_back';
 
 // Definindo a interface para os dados do formulário
 interface FormData {
@@ -18,7 +20,12 @@ interface FormData {
   uf: string;
 }
 
-export default function FormularioInicio() {
+interface Props {
+  proximaPagina: () => void;
+  voltarPagina: () => void;
+}
+
+export default function FormularioId({proximaPagina, voltarPagina}: Props) {
   const [mostrarPrimeiraDiv, setMostrarPrimeiraDiv] = useState(true);
   const [animacaoKey, setAnimacaoKey] = useState(0);
 
@@ -56,20 +63,12 @@ export default function FormularioInicio() {
     setAnimacaoKey(prevKey => prevKey + 1); // Atualiza a key
   };
 
-  // Função para lidar com o clique do botão voltar
-  const handleBackClick = () => {
-    // Lógica para voltar (pode ser um estado ou navegação)
-    console.log("Voltar clicado"); // Placeholder para a lógica de voltar
-  };
 
   return (
-    <div className="flex min-h-screen w-screen bg-black overflow-x-hidden">
+    <div className="flex min-h-screen w-screen bg-gray-800 overflow-x-hidden">
       <main className="flex min-h-screen w-full items-center justify-center flex-col">
 
-        {/* Ícone de voltar no canto superior esquerdo */}
-        <button onClick={handleBackClick} className="absolute top-4 left-4 text-gray-300 hover:text-white transition duration-200">
-          <FaArrowLeft size={24} />
-        </button>
+        <ButtonVoltar voltarPagina={voltarPagina}/>
         <h1 key={`terceiraDiv-${animacaoKey}`} className="mt-16 font-bold text-sm text-center text-gray-300">
                                 <span className="typewriter line1">Informações pessoais:</span>
                             </h1>
@@ -194,11 +193,8 @@ export default function FormularioInicio() {
 
         </form>
 
-        <div className="div-botoes mt-6 mb-6 space-x-4">
-          <button className="bg-gradient-to-r from-gray-900 to-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out">
-            Continuar
-          </button>
-        </div>
+        <ButtonContinue button_event={proximaPagina}/>
+
       </main>
     </div>
   );

@@ -4,8 +4,15 @@ import React, { useState } from 'react';
 import 'animate.css'; // Importando Animate.css
 import Switch from "react-switch"; // Importe o componente Switch
 import { FaArrowLeft } from 'react-icons/fa'; // Importando o ícone de voltar
+import ButtonContinue from '../genericComponents/button_continue';
+import ButtonVoltar from '../genericComponents/button_back';
 
-export default function FormularioInicio() {
+interface Props {
+    proximaPagina: () => void;
+    voltarPagina: () => void;
+}
+
+export default function FormularioInicioQuatro({ proximaPagina, voltarPagina }: Props) {
     const [mostrarPrimeiraDiv, setMostrarPrimeraDiv] = useState(true);
     const [animacaoKey, setAnimacaoiKey] = useState(0);
 
@@ -19,15 +26,11 @@ export default function FormularioInicio() {
     const setvalorcheckbox = [setCheckbox1, setCheckbox2, setCheckbox3, setCheckbox4, setCheckbox5];
     const doencas = ["Dor de cabeça", "Tontura", "Visão Embaçada", "Perda de equilíbrio", "Sensação de desmaio"];
 
-    const trocarDivs = (mostrar) => {
+    const trocarDivs = (mostrar: any) => {
         setMostrarPrimeraDiv(mostrar);
         setAnimacaoiKey(prevKey => prevKey + 1);
     };
 
-    const handleBackClick = () => {
-        // Lógica para voltar (pode ser um estado ou navegação)
-        console.log("Voltar clicado"); // Placeholder para a lógica de voltar
-    };
 
     return (
         <div className="flex min-h-screen w-full overflow-hidden"> {/* Ajustado para w-full e overflow-hidden */}
@@ -35,9 +38,7 @@ export default function FormularioInicio() {
                 style={{ '--animate-duration': '0.5s' }} // Ajuste de duração
             >
                 {/* Ícone de voltar no canto superior esquerdo */}
-                <button onClick={handleBackClick} className="absolute top-4 left-4 text-gray-300 hover:text-white transition duration-200">
-                    <FaArrowLeft size={24} />
-                </button>
+                <ButtonVoltar voltarPagina={voltarPagina}/>
 
                 <img src="/img/banana2.png" alt="Imagem de tireoide" className="w-full h-2/4 object-contain" />
 
@@ -69,11 +70,11 @@ export default function FormularioInicio() {
                 </div>
 
                 {/* Contêiner para a textarea com padding */}
-                <div className="flex justify-center w-full px-4 pb-4">
+                <div className="flex justify-center w-full px-4 pb-2">
                     <textarea
                         name="detalhes"
                         placeholder="Conte-nos como foi e com qual frequência sente esses sintomas."
-                        className="text-gray-300 outline-none text-sm w-full p-2 rounded-lg placeholder-gray-500 shadow-2xl shadow-black"
+                        className="text-gray-300 outline-none text-sm w-full p-1 rounded-lg placeholder-gray-500 shadow-2xl shadow-black"
                         style={{
                             backgroundColor: '#0b1014',
                             minHeight: '50px',
@@ -83,11 +84,8 @@ export default function FormularioInicio() {
                     />
                 </div>
 
-                <div className="div-botoes mb-4 space-x-4">
-                    <button className="bg-gradient-to-r from-gray-900 to-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out">
-                        Continuar
-                    </button>
-                </div>
+                <ButtonContinue button_event={proximaPagina} />
+
             </main>
         </div>
     );

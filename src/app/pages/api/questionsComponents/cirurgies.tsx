@@ -4,35 +4,36 @@ import React, { useState } from 'react';
 import InputMask from 'react-input-mask';
 import 'animate.css'; // Importando Animate.css
 import { FaArrowLeft } from 'react-icons/fa'; // Importando o ícone de voltar
+import ButtonContinue from '../genericComponents/button_continue';
+import ButtonVoltar from '../genericComponents/button_back';
 
-export default function FormularioInicio() {
+interface Props {
+    proximaPagina: () => void;
+    voltarPagina: () => void;
+}
+
+export default function FormularioInicioUm({ proximaPagina , voltarPagina}: Props) {
     const [mostrarPrimeiraDiv, setMostrarPrimeraDiv] = useState(true);
     const [animacaoKey, setAnimacaoiKey] = useState(0);
 
-    const trocarDivs = (mostrar) => {
+    const trocarDivs = (mostrar: any) => {
         setMostrarPrimeraDiv(mostrar);
         setAnimacaoiKey(prevKey => prevKey + 1);
     };
 
-    const handleBackClick = () => {
-        // Lógica para voltar (pode ser um estado ou navegação)
-        console.log("Voltar clicado"); // Placeholder para a lógica de voltar
-    };
 
     return (
         <div className="flex min-h-screen w-full overflow-hidden">
             <main className="animate__animated animate__fadeIn flex min-h-screen w-full items-center justify-center flex-col bg-black"
                 style={{ '--animate-duration; ': '1s' }} // Ajuste de duração
-            >         
+            >
                 {/* Ícone de voltar no canto superior esquerdo */}
-                <button onClick={handleBackClick} className="absolute top-4 left-4 text-gray-300 hover:text-white transition duration-200">
-                    <FaArrowLeft size={24} />
-                </button>
+                <ButtonVoltar voltarPagina={voltarPagina}/>
 
-                <img src="/img/laranja.png" alt="Imagem de tireoide" className="w-full h-2/4 object-contain" />
+                <img src="/img/maca2.png" alt="Imagem de tireoide" className="w-full h-2/4 object-contain" />
 
                 <div className="flex flex-col items-center mt-4">
-                    <h2 className="text-center text-gray-300 text-lg font-semibold">Ao longo do dia, você tem energia e sente disposição para realizar suas atividades?</h2>
+                    <h2 className="text-center text-gray-300 text-lg font-semibold">Já passou por cirurgias ou internações? Quais foram?</h2>
                 </div>
 
                 <textarea
@@ -48,12 +49,8 @@ export default function FormularioInicio() {
                     }}
                 />
 
-                <div className="div-botoes mt-6 mb-6 space-x-4">
-                    
-                    <button className="bg-gradient-to-r from-gray-900 to-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out">
-                        Continuar
-                    </button>
-                </div>
+                <ButtonContinue button_event={proximaPagina} />
+
             </main>
         </div>
     );

@@ -8,11 +8,16 @@ import InputMask from 'react-input-mask';
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { MdPhoneIphone } from "react-icons/md";
 import { GiBodyHeight } from "react-icons/gi";
+import ButtonContinue from "../genericComponents/button_continue"
 
-export default function FormularioInicio() {
+interface Props {
+    proximaPagina: () => void
+}
+
+
+export default function FormularioCadastro({ proximaPagina }: Props) {
     const [mostrarPrimeiraDiv, setMostrarPrimeiraDiv] = useState(true);
     const [animacaoKey, setAnimacaoKey] = useState(0);
-
     const [imagem, setImagem] = useState<string | null>(null);
     const handleImagemChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -30,8 +35,9 @@ export default function FormularioInicio() {
         setAnimacaoKey(prevKey => prevKey + 1); // Atualiza a key
     };
 
+
     return (
-        <div className="flex min-h-screen w-screen bg-black overflow-x-hidden">
+        <div className="flex min-h-screen w-screen bg-gray-800 overflow-x-hidden">
             <main className="flex min-h-screen w-full items-center justify-center flex-col">
                 {mostrarPrimeiraDiv ? (
                     <div className="div-textos pb-5">
@@ -149,12 +155,17 @@ export default function FormularioInicio() {
                 )}
 
                 <div className="div-botoes mt-8">
+                    {mostrarPrimeiraDiv ? (
                     <button
                         onClick={() => trocarDivs(!mostrarPrimeiraDiv)}
                         className="bg-gradient-to-r from-gray-900 to-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out"
                     >
-                        {mostrarPrimeiraDiv ? "Vamos lá!" : "Continuar"}
+                        Vamos lá!
                     </button>
+                    ):(
+                        // <div></div>
+                        <ButtonContinue button_event={proximaPagina}/>
+                    )}
                 </div>
             </main>
         </div>
