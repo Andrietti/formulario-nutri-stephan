@@ -1,6 +1,6 @@
 'use client'
-
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { GiStrongMan } from "react-icons/gi";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FaMagnifyingGlass } from "react-icons/fa6";
@@ -9,16 +9,35 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { MdPhoneIphone } from "react-icons/md";
 import { GiBodyHeight } from "react-icons/gi";
 import ButtonContinue from "../genericComponents/button_continue"
+import Usuario from '../../../entities/user'
 
 interface Props {
-    proximaPagina: () => void
+    proximaPagina: (user: Usuario) => void;
+    user?: Usuario;
 }
 
+interface FormData {
+    nome: string;
+    email: string;
+    cpf: string;
+    dataNascimento: string;
+    telefone: string;
+    altura: string;
+    cep: string;
+    address: string;
+    addressNumber: string;
+    neighborhood: string;
+    city: string;
+    uf: string;
+    cirurgies: string;
+}
 
-export default function FormularioCadastro({ proximaPagina }: Props) {
+export default function FormularioCadastro({ proximaPagina, user }: Props) {
+    const { register, handleSubmit, setValue } = useForm<FormData>();
     const [mostrarPrimeiraDiv, setMostrarPrimeiraDiv] = useState(true);
     const [animacaoKey, setAnimacaoKey] = useState(0);
     const [imagem, setImagem] = useState<string | null>(null);
+
     const handleImagemChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
@@ -32,8 +51,45 @@ export default function FormularioCadastro({ proximaPagina }: Props) {
 
     const trocarDivs = (mostrar: boolean) => {
         setMostrarPrimeiraDiv(mostrar);
-        setAnimacaoKey(prevKey => prevKey + 1); // Atualiza a key
+        setAnimacaoKey(prevKey => prevKey + 1);
     };
+
+    const onSubmit: SubmitHandler<FormData> = (data) => {
+        const usuario = new Usuario(
+            data.nome,
+            data.email,
+            data.cpf,
+            data.dataNascimento,
+            data.telefone,
+            data.altura,
+            data.cep,
+            data.address,
+            data.addressNumber,
+            data.neighborhood,
+            data.city,
+            data.uf,
+            data.cirurgies
+        );
+        proximaPagina(usuario);
+    }
+
+    useEffect(() => {
+        if (user) {
+            setValue('nome', user.getNome());
+            setValue('email', user.getEmail());
+            setValue('cpf', user.getCpf());
+            setValue('dataNascimento', user.getDataNascimento());
+            setValue('telefone', user.getTelefone());
+            setValue('altura', user.getAltura());
+            setValue('cep', user.getCep());
+            setValue('address', user.getAddress()); 
+            setValue('addressNumber', user.getAddressNumber()); 
+            setValue('neighborhood', user.getNeighborhood()); 
+            setValue('city', user.getCity()); 
+            setValue('uf', user.getUf());
+            setValue('cirurgies', user.getCirurgies());
+        }
+    }, [user]);
 
 
     return (
@@ -77,94 +133,99 @@ export default function FormularioCadastro({ proximaPagina }: Props) {
                                 <span className="typewriter line1">Informações pessoais:</span>
                             </h1>
 
-                            {/* Campo de input com o ícone */}
-                            <div className="flex items-center justify-center w-full mt-2">
-                                <div className="relative flex items-center justify-center w-11/12">
-                                    <GiStrongMan className=" absolute left-3 text-gray-500" />
-                                    <input
-                                        type="text"
-                                        name="nome"
-                                        placeholder="Nome completo"
-                                        className="text-gray-300 outline-none text-sm w-full p-2 pl-10 rounded-lg placeholder-gray-500 shadow-lg"
-                                        style={{ backgroundColor: '#0b1014' }}
-                                    />
+                            <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+                                <div className="flex items-center justify-center w-full mt-2">
+                                    <div className="relative flex items-center justify-center w-11/12">
+                                        <GiStrongMan className=" absolute left-3 text-gray-500" />
+                                        <input
+                                            type="text"
+                                            {...register("nome")}
+                                            placeholder="Nome completo"
+                                            className="text-gray-300 outline-none text-sm w-full p-2 pl-10 rounded-lg placeholder-gray-500 shadow-lg"
+                                            style={{ backgroundColor: '#0b1014' }}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex items-center justify-center w-full mt-2">
-                                <div className="relative flex items-center justify-center w-11/12">
-                                    <MdOutlineMailOutline className=" absolute left-3 text-gray-500" />
-                                    <input
-                                        type="text"
-                                        name="email"
-                                        placeholder="E-mail"
-                                        className="text-gray-300 outline-none text-sm w-full p-2 pl-10 rounded-lg placeholder-gray-500 shadow-lg"
-                                        style={{ backgroundColor: '#0b1014' }}
-                                    />
+                                <div className="flex items-center justify-center w-full mt-2">
+                                    <div className="relative flex items-center justify-center w-11/12">
+                                        <MdOutlineMailOutline className=" absolute left-3 text-gray-500" />
+                                        <input
+                                            type="text"
+                                            {...register("email")}
+                                            placeholder="E-mail"
+                                            className="text-gray-300 outline-none text-sm w-full p-2 pl-10 rounded-lg placeholder-gray-500 shadow-lg"
+                                            style={{ backgroundColor: '#0b1014' }}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex items-center justify-center w-full mt-2">
-                                <div className="relative flex items-center justify-center w-11/12">
-                                    <FaMagnifyingGlass className=" absolute left-3 text-gray-500" />
-                                    <InputMask
-                                        mask="999.999.999-99"
-                                        maskChar=""
-                                        placeholder="CPF"
-                                        className="text-gray-300 outline-none text-sm w-full p-2 pl-10 rounded-lg placeholder-gray-500 shadow-lg"
-                                        style={{ backgroundColor: '#0b1014' }}
-                                    />
+                                <div className="flex items-center justify-center w-full mt-2">
+                                    <div className="relative flex items-center justify-center w-11/12">
+                                        <FaMagnifyingGlass className=" absolute left-3 text-gray-500" />
+                                        <InputMask
+                                            {...register("cpf")}
+                                            mask="999.999.999-99"
+                                            maskChar=""
+                                            placeholder="CPF"
+                                            className="text-gray-300 outline-none text-sm w-full p-2 pl-10 rounded-lg placeholder-gray-500 shadow-lg"
+                                            style={{ backgroundColor: '#0b1014' }}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex items-center justify-center w-full mt-2">
-                                <div className="relative flex items-center justify-center w-11/12">
-                                    <FaRegCalendarAlt className=" absolute left-3 text-gray-500" />
-                                    <InputMask
-                                        mask="99/99/9999"
-                                        maskChar=""
-                                        placeholder="Data de nascimento"
-                                        className="text-gray-300 outline-none text-sm w-full p-2 pl-10 rounded-lg placeholder-gray-500 shadow-lg"
-                                        style={{ backgroundColor: '#0b1014' }}
-                                    />
+                                <div className="flex items-center justify-center w-full mt-2">
+                                    <div className="relative flex items-center justify-center w-11/12">
+                                        <FaRegCalendarAlt className=" absolute left-3 text-gray-500" />
+                                        <InputMask
+                                            {...register("dataNascimento")}
+                                            mask="99/99/9999"
+                                            maskChar=""
+                                            placeholder="Data de nascimento"
+                                            className="text-gray-300 outline-none text-sm w-full p-2 pl-10 rounded-lg placeholder-gray-500 shadow-lg"
+                                            style={{ backgroundColor: '#0b1014' }}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex items-center justify-center w-full mt-2">
-                                <div className="relative flex items-center justify-center w-11/12">
-                                    <MdPhoneIphone className=" absolute left-3 text-gray-500" />
-                                    <InputMask
-                                        mask="99-999999999"
-                                        maskChar=""
-                                        placeholder="Número de telefone"
-                                        className="text-gray-300 outline-none text-sm w-full p-2 pl-10 rounded-lg placeholder-gray-500 shadow-lg"
-                                        style={{ backgroundColor: '#0b1014' }}
-                                    />
+                                <div className="flex items-center justify-center w-full mt-2">
+                                    <div className="relative flex items-center justify-center w-11/12">
+                                        <MdPhoneIphone className=" absolute left-3 text-gray-500" />
+                                        <InputMask
+                                            {...register("telefone")}
+                                            mask="99-999999999"
+                                            maskChar=""
+                                            placeholder="Número de telefone"
+                                            className="text-gray-300 outline-none text-sm w-full p-2 pl-10 rounded-lg placeholder-gray-500 shadow-lg"
+                                            style={{ backgroundColor: '#0b1014' }}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex items-center justify-center w-full mt-2">
-                                <div className="relative flex items-center justify-center w-11/12">
-                                    <GiBodyHeight className=" absolute left-3 text-gray-500" />
-                                    <InputMask
-                                        mask="9,99"
-                                        maskChar=""
-                                        placeholder="Altura atual"
-                                        className="text-gray-300 outline-none text-sm w-full p-2 pl-10 rounded-lg placeholder-gray-500 shadow-lg"
-                                        style={{ backgroundColor: '#0b1014' }}
-                                    />
+                                <div className="flex items-center justify-center w-full mt-2">
+                                    <div className="relative flex items-center justify-center w-11/12">
+                                        <GiBodyHeight className=" absolute left-3 text-gray-500" />
+                                        <InputMask
+                                            {...register("altura")}
+                                            mask="9,99"
+                                            maskChar=""
+                                            placeholder="Altura atual"
+                                            className="text-gray-300 outline-none text-sm w-full p-2 pl-10 rounded-lg placeholder-gray-500 shadow-lg"
+                                            style={{ backgroundColor: '#0b1014' }}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
+
                         </div>
                     </div>
                 )}
 
                 <div className="div-botoes mt-8">
                     {mostrarPrimeiraDiv ? (
-                    <button
-                        onClick={() => trocarDivs(!mostrarPrimeiraDiv)}
-                        className="bg-gradient-to-r from-gray-900 to-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out"
-                    >
-                        Vamos lá!
-                    </button>
-                    ):(
-                        // <div></div>
-                        <ButtonContinue button_event={proximaPagina}/>
+                        <button
+                            onClick={() => trocarDivs(!mostrarPrimeiraDiv)}
+                            className="bg-gradient-to-r from-gray-900 to-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out"
+                        >
+                            Vamos lá!
+                        </button>
+                    ) : (
+                        <ButtonContinue button_event={handleSubmit(onSubmit)} />
                     )}
                 </div>
             </main>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import InputMask from 'react-input-mask';
 import { FaArrowLeft } from 'react-icons/fa'; // Importando o ícone de voltar
@@ -9,23 +9,33 @@ import { FaRegHeart } from "react-icons/fa";
 import { FaRegQuestionCircle } from "react-icons/fa";
 import ButtonContinue from '../genericComponents/button_continue';
 import ButtonVoltar from '../genericComponents/button_back';
+import Usuario from '../../../entities/user'
+
 
 // Definindo a interface para os dados do formulário
 interface FormData {
+  nome: string;
+  email: string;
+  cpf: string;
+  dataNascimento: string;
+  telefone: string;
+  altura: string;
   cep: string;
   address: string;
   addressNumber: string;
   neighborhood: string;
   city: string;
   uf: string;
+  cirurgies: string;
 }
 
 interface Props {
-  proximaPagina: () => void;
-  voltarPagina: () => void;
+  proximaPagina: (user: Usuario) => void;
+  voltarPagina: (user: Usuario) => void;
+  user?: Usuario;
 }
 
-export default function FormularioId({proximaPagina, voltarPagina}: Props) {
+export default function FormularioId({ proximaPagina, voltarPagina, user }: Props) {
   const [mostrarPrimeiraDiv, setMostrarPrimeiraDiv] = useState(true);
   const [animacaoKey, setAnimacaoKey] = useState(0);
 
@@ -33,8 +43,62 @@ export default function FormularioId({proximaPagina, voltarPagina}: Props) {
 
   // Função para tratar o envio do formulário
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
+    const usuario = new Usuario(
+        data.nome,
+        data.email,
+        data.cpf,
+        data.dataNascimento,
+        data.telefone,
+        data.altura,
+        data.cep,
+        data.address,
+        data.addressNumber,
+        data.neighborhood,
+        data.city,
+        data.uf,
+        data.cirurgies
+    );
+    proximaPagina(usuario);
+}
+
+
+  function handleBackPage() {
+    let data: any = '';
+    
+    data = user;
+    if (!user) {
+      data = new Usuario(
+        nome,
+        email,
+        cpf,
+        dataNascimento,
+        telefone,
+        altura,
+        cep,
+        address,
+        addressNumber,
+        neighborhood,
+        city,
+        uf
+      )
+    }
+    voltarPagina(data)
   }
+  
+  const [nome, setNome] = useState(user?.getNome() || "");
+  const [email, setEmail] = useState(user?.getEmail() || "");
+  const [cpf, setCpf] = useState(user?.getCpf() || "");
+  const [dataNascimento, setDataNascimento] = useState(user?.getDataNascimento() || "");
+  const [telefone, setTelefone] = useState(user?.getTelefone() || "");
+  const [altura, setAltura] = useState(user?.getAltura() || "");
+  const [cep, setCep] = useState(user?.getCep() || "");
+  const [address, setAddress] = useState(user?.getAddress() || "");
+  const [addressNumber, setAddressNumber] = useState(user?.getAddressNumber() || "");
+  const [neighborhood, setNeighborhood] = useState(user?.getNeighborhood() || "");
+  const [city, setCity] = useState(user?.getCity() || "");
+  const [uf, setUf] = useState(user?.getUf() || ""); 
+  const [cirurgies, setCirurgies] = useState(user?.getCirurgies() || "")
+  
 
   // Função para verificar o CEP
   const checkCEP = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -63,15 +127,33 @@ export default function FormularioId({proximaPagina, voltarPagina}: Props) {
     setAnimacaoKey(prevKey => prevKey + 1); // Atualiza a key
   };
 
+  useEffect(() => {
+    if (user) {
+        setValue('nome', user.getNome());
+        setValue('email', user.getEmail());
+        setValue('cpf', user.getCpf());
+        setValue('dataNascimento', user.getDataNascimento());
+        setValue('telefone', user.getTelefone());
+        setValue('altura', user.getAltura());
+        setValue('cep', user.getCep());
+        setValue('address', user.getAddress()); 
+        setValue('addressNumber', user.getAddressNumber()); 
+        setValue('neighborhood', user.getNeighborhood()); 
+        setValue('city', user.getCity()); 
+        setValue('uf', user.getUf());
+        setValue('cirurgies', user.getCirurgies());
+    }
+}, [user]);
+
 
   return (
     <div className="flex min-h-screen w-screen bg-gray-800 overflow-x-hidden">
       <main className="flex min-h-screen w-full items-center justify-center flex-col">
 
-        <ButtonVoltar voltarPagina={voltarPagina}/>
+        <ButtonVoltar voltarPagina={handleBackPage} />
         <h1 key={`terceiraDiv-${animacaoKey}`} className="mt-16 font-bold text-sm text-center text-gray-300">
-                                <span className="typewriter line1">Informações pessoais:</span>
-                            </h1>
+          <span className="typewriter line1">Informações pessoais:</span>
+        </h1>
         <form onSubmit={handleSubmit(onSubmit)} className="w-full">
           {/* CEP */}
           <div className="flex items-center justify-center w-full mt-2">
@@ -179,7 +261,7 @@ export default function FormularioId({proximaPagina, voltarPagina}: Props) {
           </div>
           <div className="flex items-center justify-center w-full mt-2">
             <div className="relative flex items-center justify-center w-11/12">
-              <FaRegQuestionCircle  className=" absolute left-3 text-gray-500" />
+              <FaRegQuestionCircle className=" absolute left-3 text-gray-500" />
               <input
                 type="text"
                 name="Como conheceu meu trabalho?"
@@ -193,7 +275,7 @@ export default function FormularioId({proximaPagina, voltarPagina}: Props) {
 
         </form>
 
-        <ButtonContinue button_event={proximaPagina}/>
+        <ButtonContinue button_event={handleSubmit(onSubmit)} />
 
       </main>
     </div>
