@@ -30,6 +30,12 @@ interface FormData {
     city: string;
     uf: string;
     cirurgies: string;
+    sickness: string;
+    transplants: string[];
+    transplantsDetails: string;
+    sintoms: string[];
+    sintomsDetails: string;
+    energy: string;
 }
 
 export default function FormularioCadastro({ proximaPagina, user }: Props) {
@@ -68,7 +74,13 @@ export default function FormularioCadastro({ proximaPagina, user }: Props) {
             data.neighborhood,
             data.city,
             data.uf,
-            data.cirurgies
+            data.cirurgies,
+            data.transplants,
+            data.transplantsDetails,
+            data.sintoms,
+            data.sintomsDetails,
+            data.energy,
+            data.sickness,
         );
         proximaPagina(usuario);
     }
@@ -88,6 +100,13 @@ export default function FormularioCadastro({ proximaPagina, user }: Props) {
             setValue('city', user.getCity()); 
             setValue('uf', user.getUf());
             setValue('cirurgies', user.getCirurgies());
+            setValue('transplants', user.getTransplants());
+            setValue('transplantsDetails', user.getTransplantsDetails());
+            setValue('sintoms', user.getSintoms());
+            setValue('sintomsDetails', user.getSintomsDetails());
+            setValue('energy', user.getEnergy());
+            setValue('sickness', user.getSickness());
+
         }
     }, [user]);
 
@@ -122,6 +141,7 @@ export default function FormularioCadastro({ proximaPagina, user }: Props) {
                             <input
                                 id="upload"
                                 type="file"
+                                {...register('cirurgies')}
                                 accept="image/*"
                                 onChange={handleImagemChange}
                                 className="hidden"

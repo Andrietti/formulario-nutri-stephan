@@ -29,7 +29,13 @@ interface FormData {
     city: string;
     uf: string;
     cirurgies: string;
-}
+    sickness: string;
+    transplants: string[];
+    transplantsDetails: string;
+    sintoms: string[];
+    sintomsDetails: string;
+    energy: string;
+  }
 
 export default function FormularioInicioUm({ proximaPagina , voltarPagina, user}: Props) {
     const [mostrarPrimeiraDiv, setMostrarPrimeraDiv] = useState(true);
@@ -43,78 +49,103 @@ export default function FormularioInicioUm({ proximaPagina , voltarPagina, user}
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
         const usuario = new Usuario(
-            data.nome,
-            data.email,
-            data.cpf,
-            data.dataNascimento,
-            data.telefone,
-            data.altura,
-            data.cep,
-            data.address,
-            data.addressNumber,
-            data.neighborhood,
-            data.city,
-            data.uf,
-            data.cirurgies
+          data.nome,
+          data.email,
+          data.cpf,
+          data.dataNascimento,
+          data.telefone,
+          data.altura,
+          data.cep,
+          data.address,
+          data.addressNumber,
+          data.neighborhood,
+          data.city,
+          data.uf,
+          data.cirurgies,
+          data.transplants,
+          data.transplantsDetails,
+          data.sintoms,
+          data.sintomsDetails,
+          data.energy,
+          data.sickness,
         );
         proximaPagina(usuario);
-    }
+      }
 
-    useEffect(() => {
-        console.log(user, "<---user no useeffect cirurgies")
+      useEffect(() => {
         if (user) {
-            setValue('nome', user.getNome());
-            setValue('email', user.getEmail());
-            setValue('cpf', user.getCpf());
-            setValue('dataNascimento', user.getDataNascimento());
-            setValue('telefone', user.getTelefone());
-            setValue('altura', user.getAltura());
-            setValue('cep', user.getCep());
-            setValue('address', user.getAddress()); 
-            setValue('addressNumber', user.getAddressNumber()); 
-            setValue('neighborhood', user.getNeighborhood()); 
-            setValue('city', user.getCity()); 
-            setValue('uf', user.getUf());
-            setValue('cirurgies', user.getCirurgies());
+          setValue('nome', user.getNome());
+          setValue('email', user.getEmail());
+          setValue('cpf', user.getCpf());
+          setValue('dataNascimento', user.getDataNascimento());
+          setValue('telefone', user.getTelefone());
+          setValue('altura', user.getAltura());
+          setValue('cep', user.getCep());
+          setValue('address', user.getAddress());
+          setValue('addressNumber', user.getAddressNumber());
+          setValue('neighborhood', user.getNeighborhood());
+          setValue('city', user.getCity());
+          setValue('uf', user.getUf());
+          setValue('cirurgies', user.getCirurgies());
+          setValue('transplants', user.getTransplants());
+          setValue('transplantsDetails', user.getTransplantsDetails());
+          setValue('sintoms', user.getSintoms());
+          setValue('sintomsDetails', user.getSintomsDetails());
+          setValue('energy', user.getEnergy());
+          setValue('sickness', user.getSickness());
+    
         }
-    }, [user]);
+      }, [user]);
 
-    function handleBackPage() {
-        let data: any;
-        data = user
-        if(!user) {
-            data = new Usuario(
-                nome,
-                email,
-                cpf,
-                dataNascimento,
-                telefone,
-                altura,
-                cep,
-                address,
-                addressNumber,
-                neighborhood,
-                city,
-                uf
-            )
+      function handleBackPage() {
+        let data: any = '';
+    
+        data = user;
+        if (!user) {
+          data = new Usuario(
+            nome,
+            email,
+            cpf,
+            dataNascimento,
+            telefone,
+            altura,
+            cep,
+            address,
+            addressNumber,
+            neighborhood,
+            city,
+            uf,
+            cirurgies,
+            transplants,
+            transplantsDetails,
+            sintoms,
+            sintomsDetails,
+            energy,
+            sickness
+          )
         }
-        console.log(data, "<---Data pra voltar a pagina")
         voltarPagina(data)
-    }
+      }
 
-    const [nome, setNome] = useState(user?.getNome() || "");
-    const [email, setEmail] = useState(user?.getEmail() || "");
-    const [cpf, setCpf] = useState(user?.getCpf() || "");
-    const [dataNascimento, setDataNascimento] = useState(user?.getDataNascimento() || "");
-    const [telefone, setTelefone] = useState(user?.getTelefone() || "");
-    const [altura, setAltura] = useState(user?.getAltura() || "");
-    const [cep, setCep] = useState(user?.getCep() || "");
-    const [address, setAddress] = useState(user?.getAddress() || "");
-    const [addressNumber, setAddressNumber] = useState(user?.getAddressNumber() || "");
-    const [neighborhood, setNeighborhood] = useState(user?.getNeighborhood() || "");
-    const [city, setCity] = useState(user?.getCity() || "");
-    const [uf, setUf] = useState(user?.getUf() || ""); 
-    const [cirurgies, setCirurgies] = useState(user?.getCirurgies() || "")
+      const [nome, setNome] = useState(user?.getNome() || "");
+      const [email, setEmail] = useState(user?.getEmail() || "");
+      const [cpf, setCpf] = useState(user?.getCpf() || "");
+      const [dataNascimento, setDataNascimento] = useState(user?.getDataNascimento() || "");
+      const [telefone, setTelefone] = useState(user?.getTelefone() || "");
+      const [altura, setAltura] = useState(user?.getAltura() || "");
+      const [cep, setCep] = useState(user?.getCep() || "");
+      const [address, setAddress] = useState(user?.getAddress() || "");
+      const [addressNumber, setAddressNumber] = useState(user?.getAddressNumber() || "");
+      const [neighborhood, setNeighborhood] = useState(user?.getNeighborhood() || "");
+      const [city, setCity] = useState(user?.getCity() || "");
+      const [uf, setUf] = useState(user?.getUf() || "");
+      const [cirurgies, setCirurgies] = useState(user?.getCirurgies() || "")
+      const [transplants, setTransplants] = useState(user?.getTransplants() || [])
+      const [transplantsDetails, setTransplantsDetails] = useState(user?.getTransplantsDetails() || "")
+      const [sickness, setSickness] = useState(user?.getSickness() || "");
+      const [sintoms, setSintoms] = useState(user?.getSintoms() || []);
+      const [sintomsDetails, setSintomsDetails] = useState(user?.getSintomsDetails() || "");
+      const [energy, setEnergy] = useState(user?.getEnergy() || "");
 
     return (
         <div className="flex min-h-screen w-full overflow-hidden">
@@ -143,7 +174,7 @@ export default function FormularioInicioUm({ proximaPagina , voltarPagina, user}
                     }}
                 />
 
-                <ButtonContinue button_event={proximaPagina} />
+                <ButtonContinue button_event={handleSubmit(onSubmit)} />
 
             </main>
         </div>

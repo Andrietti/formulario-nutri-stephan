@@ -12,6 +12,12 @@ export default class Usuario {
     private city: string;
     private uf: string;
     private cirurgies: string;
+    private transplants: string[];
+    private transplantsDetails: string;
+    private sintoms: string[];
+    private sintomsDetails: string;
+    private energy: string;
+    private sickness: string;
   
     constructor(
       nome: string = "",
@@ -26,7 +32,13 @@ export default class Usuario {
       neighborhood: string = "",
       city: string = "",
       uf: string = "",
-      cirurgies: string = ""
+      cirurgies: string = "",
+      transplants: string[] = [],
+      transplantsDetails: string = "",
+      sintoms: string[] = [],
+      sintomsDetails: string = "",
+      energy: string = "",
+      sickness: string = ""
     ) {
       this.nome = nome;
       this.email = email;
@@ -41,8 +53,62 @@ export default class Usuario {
       this.city = city;
       this.uf = uf;
       this.cirurgies = cirurgies;
+      this.transplants = transplants;
+      this.transplantsDetails = transplantsDetails;
+      this.sintoms = sintoms;
+      this.sintomsDetails = sintomsDetails;
+      this.energy = energy;
+      this.sickness = sickness;
+    }
+
+    public getSintomsDetails(): string{
+        return this.sintomsDetails
+    }
+
+    public setSintomsDetails(sintomsDetails: string[]): void{
+        this.sintoms = sintomsDetails
+    }
+
+    public getTransplantsDetails(): string{
+        return this.transplantsDetails
+    }
+
+    public setTransplantsDetails(transplantsDetails: string): void{
+        this.transplantsDetails = transplantsDetails
+    }
+
+    public getTransplants():  string[] {
+        return this.transplants
+    }
+
+    public setTransplants(transplants: string[]): void{
+        this.transplants = transplants
+    }
+
+    public getSintoms(): string[]{
+        return this.sintoms
+    }
+
+    public setSintoms(sintoms: string[]): void{
+        this.sintoms = sintoms
+    }
+
+    public getEnergy(): string {
+        return this.energy
+    }
+
+    public setEnergy(energy: string): void{
+        this.energy = energy
     }
     
+    public getSickness(): string {
+        return this?.sickness
+    }
+
+    public setSickness(sickness: string): void{
+        this.sickness = sickness
+    }
+
     public getCirurgies(): string {
         return this?.cirurgies
     }
